@@ -9,6 +9,8 @@ from django.utils.translation import gettext as _
 
 from rest_framework import serializers
 
+from rest_framework_simplejwt.tokens import RefreshToken
+
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the user object."""
 
@@ -60,3 +62,12 @@ class AuthTokenSerializer(serializers.Serializer):
         attrs['user'] = user
         
         return attrs
+    
+    def get_token(self, user):
+        """Retrieve the access token and refresh token for the user."""
+        refresh = RefreshToken.for_user(user)
+        tokens = {
+            'access': str(refresh.access_token),
+            'refresh': str(refresh),
+        }
+        return tokens

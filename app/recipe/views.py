@@ -3,7 +3,7 @@ Views for the recipe API
 """
 
 from rest_framework import viewsets
-from rest_framework.authentication import TokenAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from core.models import Recipe
@@ -14,7 +14,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     """View for manage recipe APIs."""
     serializer_class = serializers.RecipeDetailSerializer
     queryset = Recipe.objects.all()
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
